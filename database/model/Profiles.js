@@ -11,61 +11,33 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Profiles.belongsTo(models.Users , {as: 'User' , foreignKey: 'user_id'})
-      Profiles.belongsTo(models.Roles , {as: 'Role' , foreignKey: 'role_id'})
+      Profiles.belongsTo(models.Users , {as: 'profileU' , foreignKey: 'user_id'})
+      Profiles.belongsTo(models.Roles , {as: 'profileR' , foreignKey: 'role_id'})
     }
   }
   Profiles.init({
-    userId: {
+    id: {
       type: DataTypes.UUID ,
-      allowNull: false ,
-      field: 'user_id' ,
-      references: {
-        key: 'id' ,
-        model: 'users'
-      } ,
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE'
+      primaryKey: true
     } ,
-    roleId: {
-      type: DataTypes.UUID ,
-      allowNull: false,
-      field: 'role_id' ,
-      references: {
-        key: 'id' ,
-        model: 'roles'
-      },
-      onUpdate: 'CASCADE' ,
-      onDelete: 'CASCADE'
-    } ,
-    imageUrl: {
-      type: DataTypes.STRING,
-      allowNull: true,
-      field: 'image_url' ,
-      validate: {
-        isUrl: true
-      }
-    } ,
-    codePhone: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      field: 'code_phone'
-    } ,
-    phone: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    } ,
-    countryId: { // Waiting for Josué
-      type: DataTypes.UUID,
-      // allowNull: false,
-      field: 'country_id'
-      // Foreign key references pending
-    }
+    userId: DataTypes.UUID ,
+    roleId: DataTypes.UUID ,
+    imageUrl: DataTypes.UUID ,
+    codePhone: DataTypes.INTEGER ,
+    phone: DataTypes.INTEGER ,
+    countryId: DataTypes.UUID
   }, {
     sequelize,
     modelName: 'Profiles',
     tableName: 'profiles' , 
-    timestamps: false 
+    timestamps: true ,
+    scopes: {
+      no_timestamps: {
+        attributes: {
+          exclude: ['created_at' , 'updated_at']
+        }
+      }
+    }
   })
   return Profiles
 }

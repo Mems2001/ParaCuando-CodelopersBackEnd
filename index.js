@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 8000
 
 // Routes imports
 const usersRouter = require('./routes/users.routes')
+const authRouter = require('./routes/auth.routes')
 
 // Cors settings
 const whitelist = ['http://localhost:8000']
@@ -44,6 +45,7 @@ app.get('/', (req , res) => {
 })
 
 app.use('/api/v1/users' , usersRouter)
+app.use('/api/v1/auth', authRouter)
 
 app.listen(PORT, () => {
   console.log(`Server on PORT: ${PORT}`)
