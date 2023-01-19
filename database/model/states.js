@@ -26,7 +26,8 @@ module.exports = (sequelize, DataTypes) => {
     onDelete: 'CASCADE'
   }, {
     sequelize,
-    modelName: 'states',
+    modelName: 'States',
+    tableName: 'states'
   });
   return states;
 };
