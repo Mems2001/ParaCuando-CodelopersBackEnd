@@ -8,28 +8,28 @@ module.exports = {
     const transaction = await queryInterface.sequelize.transaction()
 
     try {
-      await queryInterface.bulkInsert('publication_types' , [
+      await queryInterface.bulkInsert('cities' , [
         {
           id: 1 ,
-          name: 'event' ,
-          description: '' ,
+          state_id: 1,  // Waiting for Josué
+          name: 'Quito',
           createdAt: new Date() ,
           updatedAt: new Date()
         } ,
         {
           id: 2 ,
-          name: 'concert' ,
-          description: '' ,
+          state_id: 2 ,
+          name: 'Cuenca',
           createdAt: new Date() ,
           updatedAt: new Date()
         } ,
         {
           id: 3 ,
-          name: 'tournament' ,
-          description: '' ,
+          state_id: 3 ,
+          name: 'Guayaquil',
           createdAt: new Date() ,
           updatedAt: new Date()
-        } ,
+        }
       ] , {transaction})
 
       await transaction.commit()
@@ -43,15 +43,15 @@ module.exports = {
     const transaction = await queryInterface.sequelize.transaction()
 
     try {
-      await queryInterface.bulkDelete('publication_types' , {
+      await queryInterface.bulkDelete('cities' , {
         name: {
-          [Op.or] : ['event' , 'concert' , 'tournament']
+          [Op.or]: ['Quito' , 'Cuenca' , 'Guayaquil']
         }
       } , {transaction})
 
       await transaction.commit()
-    } catch(error) {
-      await transaction.rollback()
+    } catch (error) {
+      await transaction.rollback() 
       throw error
     }
   }

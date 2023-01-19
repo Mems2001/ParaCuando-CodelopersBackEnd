@@ -1,5 +1,5 @@
 'use strict'
-const uuid = require('uuid')
+// const uuid = require('uuid')
 const {Op} = require('sequelize')
 
 /** @type {import('sequelize-cli').Migration} */
@@ -10,9 +10,11 @@ module.exports = {
     try {
       await queryInterface.bulkInsert('countries' , [
         {
-          id: uuid.v4() ,
-          name: 'X' // Waiting for decision
-        }
+          id: 1  ,
+          name: 'Ecuador' , // Waiting for decision
+          createdAt: new Date() ,
+          updatedAt: new Date() 
+        } 
       ] , {transaction})
 
       await transaction.commit()
@@ -28,7 +30,7 @@ module.exports = {
     try {
       await queryInterface.bulkDelete('countries' , {
         name: {
-          [Op.or] : ['X']
+          [Op.or] : ['Ecuador']
         }
       } , {transaction})
 
