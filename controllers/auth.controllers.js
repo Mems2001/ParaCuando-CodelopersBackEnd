@@ -2,9 +2,12 @@ const generateJWT = require('../utils/generate-jwt')
 const usersServices = require('../controllers/users.controllers')
 const { comparePasswords } = require('../utils/cypto')
 const usersService = new usersServices()
+
+/* 
 import User from '../database/model/users'
 import jwt  from 'jsonwebtoken'
 import Role from '../database/model/roles'
+*/
 
 const login = async(req, res) => {
   const {email, password} = req.body
@@ -42,6 +45,7 @@ const login = async(req, res) => {
  
 }
 
+/* Optional controllers (Ángel)
 const signUp = async (req, res) => {
   const {userName, email, password, roles} = req.body
 
@@ -75,4 +79,7 @@ module.exports = {
   login,
   signUp,
   userInfo
+  */
+module.exports = {
+  login
 }
