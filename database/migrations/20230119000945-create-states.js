@@ -13,6 +13,7 @@ try {
       },
       country_id: {
         type: Sequelize.INTEGER,
+        allowNull: false ,
         references: {
           key: 'id' ,
           model: 'countries'
