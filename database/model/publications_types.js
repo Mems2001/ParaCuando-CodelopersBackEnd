@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'publications_types',
+    modelName: 'Publications_types',
+    tableName: 'publications_types'
   });
   return publications_types;
 };
