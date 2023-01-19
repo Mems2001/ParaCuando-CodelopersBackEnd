@@ -4,14 +4,10 @@ const cors = require('cors')
 const helmet = require('helmet')
 require('dotenv').config()
 
-import { createRoles } from './utils/initialSetUp';
-
 // Files imports
 
 const app = express()
 const PORT = process.env.PORT || 8000
-createRoles()
-
 
 // Routes imports
 const usersRouter = require('./routes/users.routes')
