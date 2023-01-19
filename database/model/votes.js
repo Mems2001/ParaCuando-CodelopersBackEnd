@@ -22,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     profile_id: DataTypes.UUID
   }, {
     sequelize,
-    modelName: 'votes',
+    modelName: 'Votes',
+    tableName: 'votes'
   });
   return votes;
 };
