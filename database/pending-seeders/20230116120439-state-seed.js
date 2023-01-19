@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 const {Op} = require('sequelize')
 
 /** @type {import('sequelize-cli').Migration} */

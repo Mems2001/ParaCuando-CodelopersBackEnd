@@ -1,5 +1,5 @@
 'use strict'
-const uuid = require('uuid')
+// const uuid = require('uuid')
 const {Op} = require('sequelize')
 
 /** @type {import('sequelize-cli').Migration} */

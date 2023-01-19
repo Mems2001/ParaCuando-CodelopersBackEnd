@@ -1,5 +1,5 @@
 'use strict'
-const uuid = require('uuid')
+// const uuid = require('uuid')
 const {Op} = require('sequelize')
 
 /** @type {import('sequelize-cli').Migration} */
@@ -10,19 +10,25 @@ module.exports = {
     try {
       await queryInterface.bulkInsert('publication_types' , [
         {
-          id: uuid.v4() ,
+          id: 1 ,
           name: 'event' ,
-          description: ''
+          description: '' ,
+          createdAt: new Date() ,
+          updatedAt: new Date()
         } ,
         {
-          id: uuid.v4() ,
+          id: 2 ,
           name: 'concert' ,
-          description: ''
+          description: '' ,
+          createdAt: new Date() ,
+          updatedAt: new Date()
         } ,
         {
-          id: uuid.v4() ,
+          id: 3 ,
           name: 'tournament' ,
-          description: ''
+          description: '' ,
+          createdAt: new Date() ,
+          updatedAt: new Date()
         } ,
       ] , {transaction})
 
