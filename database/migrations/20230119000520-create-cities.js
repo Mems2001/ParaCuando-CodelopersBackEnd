@@ -13,12 +13,14 @@ module.exports = {
       },
       state_id: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           key: 'id' ,
           model: 'states'
         },
       },
       name: {
+        allowNull: false ,
         type: Sequelize.STRING
       },
       createdAt: {
