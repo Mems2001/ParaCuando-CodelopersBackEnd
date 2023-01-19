@@ -10,9 +10,25 @@ module.exports = {
     try {
       await queryInterface.bulkInsert('cities' , [
         {
-          id: uuid.v4() ,
-          countryId: '',  // Waiting for Josué
-          name: 'X'
+          id: 1 ,
+          state_id: 1,  // Waiting for Josué
+          name: 'Quito',
+          createdAt: new Date() ,
+          updatedAt: new Date()
+        } ,
+        {
+          id: 2 ,
+          state_id: 2 ,
+          name: 'Cuenca',
+          createdAt: new Date() ,
+          updatedAt: new Date()
+        } ,
+        {
+          id: 3 ,
+          state_id: 3 ,
+          name: 'Guayaquil',
+          createdAt: new Date() ,
+          updatedAt: new Date()
         }
       ] , {transaction})
 
@@ -29,7 +45,7 @@ module.exports = {
     try {
       await queryInterface.bulkDelete('cities' , {
         name: {
-          [Op.or]: ['X']
+          [Op.or]: ['Quito' , 'Cuenca' , 'Guayaquil']
         }
       } , {transaction})
 
