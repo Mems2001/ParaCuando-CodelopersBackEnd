@@ -69,11 +69,59 @@ const getAllUsers = (req , res) => {
         message: err.message
       })
     })
+} 
+
+const getOwnProfile = (req , res) => {
+  // const userId = req.user.id
+  const {userId} = req.body
+
+  usersController.findOwnProfile(userId)
+    .then(data => {
+      res.status(200).json(data)
+    })
+    .catch(err => {
+      res.status(400).json({
+        message: err.message
+      })
+    })
+}
+
+const putUser = (req, res) => {
+  // const userId = req.user.id
+  const {userId} = req.body
+  const {firstName , lastName , userName} = req.body
+
+  if (firstName && lastName && userName) {
+    usersController.updateUser(userId , {
+      firstName , lastName , userName
+    })
+      .then(data => {
+        res.status(200).json({
+          message: 'User updated'
+        })
+      })
+      .catch(err => {
+        res.status(400).json({
+          message: err.message
+        })
+      })
+  } else {
+    res.status(400).json({
+      message: 'All fields are required' ,
+      fields: {
+        firstName: 'string' ,
+        lastName: 'string' ,
+        userName: 'string'
+      }
+    })
+  }
 }
 
 module.exports = {
   getUserByUserName ,
   postNewUser ,
   getUserById ,
-  getAllUsers
+  getAllUsers ,
+  getOwnProfile ,
+  putUser
 }

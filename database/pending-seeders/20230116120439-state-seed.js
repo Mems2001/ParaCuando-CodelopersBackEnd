@@ -1,5 +1,4 @@
 'use strict'
-// const uuid = require('uuid')
 const {Op} = require('sequelize')
 
 /** @type {import('sequelize-cli').Migration} */
@@ -8,28 +7,28 @@ module.exports = {
     const transaction = await queryInterface.sequelize.transaction()
 
     try {
-      await queryInterface.bulkInsert('publication_types' , [
+      await queryInterface.bulkInsert('states' , [
         {
           id: 1 ,
-          name: 'event' ,
-          description: '' ,
+          country_id: 1 ,
+          name: 'Pichincha' ,
           createdAt: new Date() ,
           updatedAt: new Date()
         } ,
         {
           id: 2 ,
-          name: 'concert' ,
-          description: '' ,
+          country_id: 1 ,
+          name: 'Azuay' ,
           createdAt: new Date() ,
           updatedAt: new Date()
         } ,
         {
           id: 3 ,
-          name: 'tournament' ,
-          description: '' ,
+          country_id: 1 ,
+          name: 'Guayas' ,
           createdAt: new Date() ,
           updatedAt: new Date()
-        } ,
+        }
       ] , {transaction})
 
       await transaction.commit()
@@ -43,16 +42,16 @@ module.exports = {
     const transaction = await queryInterface.sequelize.transaction()
 
     try {
-      await queryInterface.bulkDelete('publication_types' , {
+      await queryInterface.bulkDelete('states' , {
         name: {
-          [Op.or] : ['event' , 'concert' , 'tournament']
+          [Op.or] : ['Pichincha' , 'Azuay' , 'Guayas']
         }
       } , {transaction})
 
       await transaction.commit()
-    } catch(error) {
+    } catch (error) {
       await transaction.rollback()
       throw error
     }
   }
-}
+};
