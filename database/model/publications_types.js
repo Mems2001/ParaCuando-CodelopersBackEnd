@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class publications_types extends Model {
+  class Publications_types extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,11 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      publications_types.belongsTo(models.publications, {as: 'publication_type', foreignKey: 'publication_id'})
-      
+      Publications_types.belongsTo(models.Publications, { as: 'publication', foreignKey: 'publication_type_id' })
+      Publications_types.hasMany(models.Publications, {as: 'publication_type' ,foreignKey: 'publication_type_id'})
     }
   }
-  publications_types.init({
+  Publications_types.init({
     name: DataTypes.STRING,
     description: DataTypes.STRING
   }, {
@@ -23,5 +23,5 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Publications_types',
     tableName: 'publications_types'
   });
-  return publications_types;
+  return Publications_types;
 };
