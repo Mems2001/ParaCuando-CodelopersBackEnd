@@ -3,6 +3,12 @@ const usersServices = require('../controllers/users.controllers')
 const { comparePasswords } = require('../utils/cypto')
 const usersService = new usersServices()
 
+/* 
+import User from '../database/model/users'
+import jwt  from 'jsonwebtoken'
+import Role from '../database/model/roles'
+*/
+
 const login = async(req, res) => {
   const {email, password} = req.body
 
@@ -39,6 +45,41 @@ const login = async(req, res) => {
  
 }
 
+/* Optional controllers (Ángel)
+const signUp = async (req, res) => {
+  const {userName, email, password, roles} = req.body
+
+  const newUser = new User({
+    userName,
+    email, 
+    password: User.encryptPassword(password)
+  })
+
+  if (roles) {
+    const foundRoles = await Role.find({name: {$in: roles}})
+    newUser.roles = foundRoles.map(role => role.id)
+  } else {
+    const role = await Role.findOne({name: 'user'})
+    newUser.roles = [role.id]
+  }
+
+  const savedUser = await newUser.save()
+
+  const token = jwt.sign({id: savedUser.id}, process.env.JWT_SECRET, {
+    expiresIn: 86400 // 24 hours
+  })
+  res.json({token})
+}
+
+const userInfo = async (req, res) => {
+
+}
+
+module.exports = {
+  login,
+  signUp,
+  userInfo
+  */
 module.exports = {
   login
 }
