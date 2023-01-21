@@ -54,4 +54,4 @@ module.exports = {
       throw error
     }
   }
-};
+}
