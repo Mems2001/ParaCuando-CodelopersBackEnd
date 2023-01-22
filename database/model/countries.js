@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 const {
   Model
-} = require('sequelize');
+} = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Countries extends Model {
     /**
@@ -11,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Countries.belongsTo(models.Profiles, {as: 'profile', foreignKey: 'country_id'})
-      Countries.belongsTo(models.States, {as: 'country', foreignKey: 'country_id'})
-      Countries.hasMany(models.Profiles, {as: 'profile', foreignKey: 'country_id'})
-      Countries.hasMany(models.States, {as: 'state', foreignKey: 'country_id'})
+      Countries.belongsTo(models.Profiles, {as: 'Country', foreignKey: 'country_id'})
+      Countries.belongsTo(models.States, {as: 'country', foreignKey: 'country_id'}) // No es cierto que Countries "pertenezca a" States, los países no pertenencen a los estados, sino que los estados pertenecen a los países, esta relación no va.
+      Countries.hasMany(models.Profiles, {as: 'country', foreignKey: 'country_id'}) //Countries no puede tener con Profiles la relación "hasMany" y "belongsTo" a la vez, en este caso "hasMany" es la correcta.
+      Countries.hasMany(models.States, {as: 'country', foreignKey: 'country_id'}) //Countries no puede tener con States la relación "hasMany" y "belongsTo" a la vez.
     }
   }
   Countries.init({
@@ -23,6 +23,6 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Countries',
     tableName: 'countries'
-  });
-  return Countries;
-};
+  })
+  return Countries
+}

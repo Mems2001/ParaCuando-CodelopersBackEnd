@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 const {
   Model
-} = require('sequelize');
+} = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Cities extends Model {
     /**
@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Cities.hasMany(models.Publications, {as: 'city', foreignKey: 'city_id'})
-      Cities.hasMany(models.States, {as: 'city', foreignKey: 'state_id'})
+      Cities.hasMany(models.States, {as: 'city', foreignKey: 'state_id'})  // No es cierto que Cities tenga muchos States, es al revés, States tiene muchas Cities y cities "belongsTo" States (Una ciudad sólo pertenece a un estado)
     }
   }
   Cities.init({
@@ -22,6 +22,6 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Cities',
     tableName: 'cities'
-  });
-  return Cities;
-};
+  })
+  return Cities
+}

@@ -1,6 +1,7 @@
 'use strict'
-// const uuid = require('uuid')
+const uuid = require('uuid')
 const {Op} = require('sequelize')
+const { findCountryByName } = require('../../controllers/countries.controllers')
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -8,25 +9,26 @@ module.exports = {
     const transaction = await queryInterface.sequelize.transaction()
 
     try {
-      await queryInterface.bulkInsert('cities' , [
+      const country = await findCountryByName('Ecuador')
+      await queryInterface.bulkInsert('states' , [
         {
-          id: 1 ,
-          state_id: 1,  // Waiting for Josué
-          name: 'Quito',
+          id: uuid.v4() ,
+          country_id: country.id ,
+          name: 'Pichincha' ,
           createdAt: new Date() ,
           updatedAt: new Date()
         } ,
         {
-          id: 2 ,
-          state_id: 2 ,
-          name: 'Cuenca',
+          id: uuid.v4() ,
+          country_id: country.id ,
+          name: 'Azuay' ,
           createdAt: new Date() ,
           updatedAt: new Date()
         } ,
         {
-          id: 3 ,
-          state_id: 3 ,
-          name: 'Guayaquil',
+          id: uuid.v4() ,
+          country_id: country.id ,
+          name: 'Guayas' ,
           createdAt: new Date() ,
           updatedAt: new Date()
         }
@@ -43,15 +45,15 @@ module.exports = {
     const transaction = await queryInterface.sequelize.transaction()
 
     try {
-      await queryInterface.bulkDelete('cities' , {
+      await queryInterface.bulkDelete('states' , {
         name: {
-          [Op.or]: ['Quito' , 'Cuenca' , 'Guayaquil']
+          [Op.or] : ['Pichincha' , 'Azuay' , 'Guayas']
         }
       } , {transaction})
 
       await transaction.commit()
     } catch (error) {
-      await transaction.rollback() 
+      await transaction.rollback()
       throw error
     }
   }

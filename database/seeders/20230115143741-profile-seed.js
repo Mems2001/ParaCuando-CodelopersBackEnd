@@ -1,5 +1,6 @@
 'use strict'
 const uuid = require('uuid')
+const { findCountryByName } = require('../../controllers/countries.controllers')
 const { findRoleByName } = require('../../controllers/roles.controllers')
 
 const UsersControllers = require('../../controllers/users.controllers')
@@ -20,24 +21,28 @@ module.exports = {
       users.push(admin3)
       const rolePublic = await findRoleByName('public')
       const roleAdmin = await findRoleByName('admin')
+      const country = await findCountryByName('Ecuador')
       const users_ids = []
       const profiles = [
         {
           id: uuid.v4() ,
           user_id: admin.id ,
           role_id: roleAdmin.id ,
+          country_id: country.id ,
           phone: 999196035
         } ,
         {
           id: uuid.v4() , // Waitin for Ángel <---------
           user_id: admin2.id ,
           role_id: roleAdmin.id ,
+          country_id: country.id ,
           phone: 999196036
         } ,
         {
           id: uuid.v4() , // Waitin for Josué <---------
           user_id: admin3.id ,
           role_id: roleAdmin.id ,
+          country_id: country.id ,
           phone: 999196037
         } 
       ]
