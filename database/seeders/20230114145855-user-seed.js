@@ -15,7 +15,8 @@ module.exports = {
         last_name: 'Muso' ,
         email: 'mems2001code@gmail.com' ,
         user_name: 'mems2001' ,
-        password: hashPassword('root')
+        password: hashPassword('root') ,
+        email_verified: true
       } ,
       {
         id: uuid.v4() , // Waiting for Ángel <-------------
@@ -23,7 +24,8 @@ module.exports = {
         last_name: 'Carrasco' ,
         email: 'pending1@gmail.com' ,
         user_name: 'pendingAdmin1' ,
-        password: hashPassword('root')
+        password: hashPassword('root') ,
+        email_verified: true
       } ,
       {
         id: uuid.v4(), // Waiting for Josué <--------------
@@ -31,7 +33,8 @@ module.exports = {
         last_name: 'Ventura' ,
         email: 'pending2@gmail.com' ,
         user_name: 'pendingAdmin2' ,
-        password: hashPassword('root')
+        password: hashPassword('root') ,
+        email_verified: true
       } 
     ]
 
@@ -42,7 +45,8 @@ module.exports = {
         last_name: 'example' ,
         email: `${i}@example.com` ,
         user_name: `${i}Example` ,
-        password: hashPassword(`${i}Example`)
+        password: hashPassword(`${i}Example`),
+        email_verified: false
       }
       usersSeeds.push(newSeed)
     }

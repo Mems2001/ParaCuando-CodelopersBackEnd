@@ -48,8 +48,9 @@ module.exports = {
           type: Sequelize.STRING
         },
         emailVerified: {
-          type: Sequelize.DATE,
-          field: 'email_verified'
+          type: Sequelize.BOOLEAN,
+          defaultValue: false ,
+          field: 'email_verified' 
         } ,
         token: {
           type: Sequelize.STRING
