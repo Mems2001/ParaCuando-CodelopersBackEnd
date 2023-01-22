@@ -1,7 +1,7 @@
-'use strict'
+'use strict';
 const {
   Model
-} = require('sequelize')
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Publications_types extends Model {
     /**
@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Publications_types.belongsTo(models.Publications, { as: 'publication', foreignKey: 'publication_type_id' })
-      Publications_types.hasMany(models.Publications, {as: 'publication_type' ,foreignKey: 'publication_type_id'})
+      Publications_types.belongsTo(models.Publications, { as: 'publication_type', foreignKey: 'publication_type_id' })
+      Publications_types.hasMany(models.Publications, {as: 'publication' ,foreignKey: 'publication_type_id'})
     }
   }
   Publications_types.init({
@@ -22,6 +22,6 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Publications_types',
     tableName: 'publications_types'
-  })
-  return Publications_types
-}
+  });
+  return Publications_types;
+};

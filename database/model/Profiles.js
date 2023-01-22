@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Profiles.belongsTo(models.Users , {as: 'User' , foreignKey: 'user_id'})
       Profiles.belongsTo(models.Roles , {as: 'Role' , foreignKey: 'role_id'})
-     
+      Profiles.hasMany(models.Votes, {as: 'vote', foreignKey: 'profile_id'})
+      
     }
   }
   Profiles.init({

@@ -3,8 +3,8 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     const transaction = await queryInterface.sequelize.transaction()
-    try {
-        await queryInterface.createTable('cities', {
+    try {  
+        await queryInterface.createTable('countries', {
           id: {
             allowNull: false,
             //autoIncrement: true,
@@ -16,47 +16,33 @@ module.exports = {
             type: Sequelize.STRING,
             allowNull: false
           },
-          stateId: {
-            type: Sequelize.UUID,
-            allowNull: false,
-            field: 'state_id',
-            references: {
-              key: 'id',
-              model: 'states'
-            },
-            onUpdate: 'CASCADE',
-            onDelete: 'CASCADE'
-          },
           createdAt: {
             allowNull: false,
             type: Sequelize.DATE,
-            field: 'created_at',
-            defaultValue: new Date()
+            field: 'created_at'
           },
           updatedAt: {
             allowNull: false,
             type: Sequelize.DATE,
-            field: 'updated_at',
-            defaultValue: new Date()
+            field: 'uptated_at'
           }
         }, { transaction });
 
         await transaction.commit()
-    } catch (error) {
-      await transaction.rollback()
-      throw error
-
-    }
+      } catch (error) {
+        await transaction.rollback()
+        throw error
+      }
       },
       async down(queryInterface, Sequelize) {
         const transaction = await queryInterface.sequelize.transaction()
-        try {
-            await queryInterface.dropTable('cities');
-
-            await transaction.commit()
-          } catch (error) {
-            await transaction.rollback()
-            throw error
-          }
+              try {
+                    await queryInterface.dropTable('countries');
+                    
+                    await transaction.commit()
+                  } catch (error) {
+                    await transaction.rollback()
+                    throw error
+            }
       }
-    };
+};
