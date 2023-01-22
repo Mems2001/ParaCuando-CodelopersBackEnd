@@ -11,9 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Publications.belongsTo(models.Profiles , {as: 'profile' , foreignKey: 'publication_id'})
-      Publications.hasMany(models.Profiles, {as: 'publication' ,foreignKey: 'publication_id'})
+      Publications.belongsTo(models.Profiles , {as: 'publication' , foreignKey: 'publication_id'})
+      Publications.hasMany(models.Profiles, {as: 'profile' ,foreignKey: 'publication_id'})
       Publications.hasMany(models.Cities, {as: 'city', foreignKey: 'city_id'})
+      Publications.hasMany(models.Votes, {as: 'vote', foreignKey: 'publication_id'})
     }
   }
   Publications.init({
@@ -23,8 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     picture: DataTypes.STRING,
     image_url: DataTypes.STRING,
     profileId: DataTypes.UUID,
-    publicationTypeId: DataTypes.INTEGER,
-    cityId: DataTypes.INTEGER
+    publicationTypeId: DataTypes.UUID,
+    cityId: DataTypes.UUID
   }, {
     sequelize,
     modelName: 'Publications',

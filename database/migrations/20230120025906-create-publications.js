@@ -8,7 +8,7 @@ module.exports = {
           id: {
             allowNull: false,
          // autoIncrement: true,
-            defaultValue: Sequelize.UUID,
+            defaultValue: Sequelize.UUIDV4,
             primaryKey: true,
             type: Sequelize.UUID
           },
@@ -45,21 +45,22 @@ module.exports = {
             onUpdate: 'CASCADE',
             onDelete: 'CASCADE'
           },
-           /*{ publicationTypeId: {
-            type: Sequelize.INTEGER,
+           publicationTypeId: {
+            type: Sequelize.UUID,
             allowNull: false,
             field: 'publication_type_id',
             foreignKey: true,
             
             references: {
               key: 'id',
-              model: 'publications_types' // en revision
+              model: 'publications_types'
             },
             onUpdate: 'CASCADE',
             onDelete: 'CASCADE'
-          }, }*/
+          
+          }, 
             cityId: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.UUID,
             allowNull: false,
             field: 'city_id',
             foreignKey: true,
