@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Cities.hasMany(models.Publications, {as: 'city', foreignKey: 'city_id'})
-      Cities.hasMany(models.States, {as: 'city', foreignKey: 'state_id'})  // No es cierto que Cities tenga muchos States, es al revés, States tiene muchas Cities y cities "belongsTo" States (Una ciudad sólo pertenece a un estado)
+      Cities.belongsTo(models.States, {as: 'State', foreignKey: 'state_id'})
     }
   }
   Cities.init({

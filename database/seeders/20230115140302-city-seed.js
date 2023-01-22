@@ -18,22 +18,22 @@ module.exports = {
           id: uuid.v4() ,
           state_id: pichincha.id,  // Waiting for Josué
           name: 'Quito',
-          createdAt: new Date() ,
-          updatedAt: new Date()
+          created_at: new Date() ,
+          updated_at: new Date()
         } ,
         {
           id: uuid.v4() ,
           state_id: azuay.id ,
           name: 'Cuenca',
-          createdAt: new Date() ,
-          updatedAt: new Date()
+          created_at: new Date() ,
+          updated_at: new Date()
         } ,
         {
           id: uuid.v4() ,
           state_id: guayas.id ,
           name: 'Guayaquil',
-          createdAt: new Date() ,
-          updatedAt: new Date()
+          created_at: new Date() ,
+          updated_at: new Date()
         }
       ] , {transaction})
 

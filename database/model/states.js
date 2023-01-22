@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      States.belongsTo(models.Cities, {as: 'state', foreignKey: 'state_id'})
+      States.hasMany(models.Cities, {as: 'state', foreignKey: 'state_id'})
+      States.belongsTo(models.Countries, {as: 'Country' , foreignKey: 'country_id'})
     }
   }
   States.init({

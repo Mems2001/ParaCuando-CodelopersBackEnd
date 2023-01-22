@@ -16,34 +16,35 @@ module.exports = {
       const admin = await usersController.findUsersByUserName('mems2001')
       const admin2 = await usersController.findUsersByUserName('pendingAdmin1')
       const admin3 = await usersController.findUsersByUserName('pendingAdmin2')
+      const country = await findCountryByName('Ecuador')
+      // console.log(country)
       users.push(admin)
       users.push(admin2)
       users.push(admin3)
       const rolePublic = await findRoleByName('public')
       const roleAdmin = await findRoleByName('admin')
-      const country = await findCountryByName('Ecuador')
       const users_ids = []
       const profiles = [
         {
           id: uuid.v4() ,
           user_id: admin.id ,
           role_id: roleAdmin.id ,
-          country_id: country.id ,
-          phone: 999196035
+          phone: 999196035 ,
+          country_id: country.id
         } ,
         {
           id: uuid.v4() , // Waitin for Ángel <---------
           user_id: admin2.id ,
           role_id: roleAdmin.id ,
-          country_id: country.id ,
-          phone: 999196036
+          phone: 999196036 ,
+          country_id: country.id 
         } ,
         {
           id: uuid.v4() , // Waitin for Josué <---------
           user_id: admin3.id ,
           role_id: roleAdmin.id ,
-          country_id: country.id ,
-          phone: 999196037
+          phone: 999196037 ,
+          country_id: country.id 
         } 
       ]
       
@@ -61,7 +62,7 @@ module.exports = {
           user_id,
           role_id: rolePublic.id,
           phone: 999999999 - users_ids.indexOf(user_id),
-  
+          country_id: country.id  
         }
         profiles.push(profile)
       }

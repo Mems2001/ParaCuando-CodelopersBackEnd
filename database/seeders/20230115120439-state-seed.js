@@ -15,22 +15,22 @@ module.exports = {
           id: uuid.v4() ,
           country_id: country.id ,
           name: 'Pichincha' ,
-          createdAt: new Date() ,
-          updatedAt: new Date()
+          created_at: new Date() ,
+          updated_at: new Date()
         } ,
         {
           id: uuid.v4() ,
           country_id: country.id ,
           name: 'Azuay' ,
-          createdAt: new Date() ,
-          updatedAt: new Date()
+          created_at: new Date() ,
+          updated_at: new Date()
         } ,
         {
           id: uuid.v4() ,
           country_id: country.id ,
           name: 'Guayas' ,
-          createdAt: new Date() ,
-          updatedAt: new Date()
+          created_at: new Date() ,
+          updated_at: new Date()
         }
       ] , {transaction})
 

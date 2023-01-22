@@ -24,7 +24,7 @@ module.exports = {
         updatedAt: {
           allowNull: false,
           type: Sequelize.DATE,
-          field: 'uptated_at'
+          field: 'updated_at'
         }
       }, { transaction })
 
