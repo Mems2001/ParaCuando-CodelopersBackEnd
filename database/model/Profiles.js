@@ -13,16 +13,56 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Profiles.belongsTo(models.Users , {as: 'User' , foreignKey: 'user_id'})
       Profiles.belongsTo(models.Roles , {as: 'Role' , foreignKey: 'role_id'})
-     
+      Profiles.hasMany(models.Votes, {as: 'vote', foreignKey: 'profile_id'})
+      
     }
   }
   Profiles.init({
-    userId: DataTypes.UUID ,
-    roleId: DataTypes.UUID ,
-    imageUrl: DataTypes.STRING,
-    codePhone: DataTypes.INTEGER,
-    phone: DataTypes.INTEGER,
-    countryId: DataTypes.UUID
+    userId: {
+      type: DataTypes.UUID ,
+      allowNull: false ,
+      field: 'user_id' ,
+      references: {
+        key: 'id' ,
+        model: 'users'
+      } ,
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    } ,
+    roleId: {
+      type: DataTypes.UUID ,
+      allowNull: false,
+      field: 'role_id' ,
+      references: {
+        key: 'id' ,
+        model: 'roles'
+      },
+      onUpdate: 'CASCADE' ,
+      onDelete: 'CASCADE'
+    } ,
+    imageUrl: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      field: 'image_url' ,
+      validate: {
+        isUrl: true
+      }
+    } ,
+    codePhone: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      field: 'code_phone'
+    } ,
+    phone: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    } ,
+    countryId: { // Waiting for Josué
+      type: DataTypes.UUID,
+      // allowNull: false,
+      field: 'country_id'
+      // Foreign key references pending
+    }
   }, {
     sequelize,
     modelName: 'Profiles',
