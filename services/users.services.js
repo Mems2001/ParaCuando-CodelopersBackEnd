@@ -16,8 +16,8 @@ const getUserByUserName = (req, res) => {
 }
 
 const postNewUser = (req , res) => {
-  const {first_name , last_name , user_name , email , password , phone , countryId} = req.body
-  usersController.createUser({first_name , last_name , user_name , email , password , phone , countryId})
+  const {firstName , lastName , userName , email , password , phone , countryId} = req.body
+  usersController.createUser({firstName , lastName , userName , email , password , phone , countryId})
     .then(data => {
       return res.status(201).json({
         User: data.newUser ,
@@ -28,9 +28,9 @@ const postNewUser = (req , res) => {
       res.status(400).json({
         message: err.message ,
         fields: {
-          first_name: 'string' ,
-          last_name: 'string' ,
-          user_name: 'string' ,
+          firstName: 'string' ,
+          lastName: 'string' ,
+          userName: 'string' ,
           email: 'string@email.com' ,
           password: 'string' ,
           phone: 999999999 ,
@@ -104,7 +104,8 @@ const putUser = (req, res) => {
       })
         .then(data => {
           res.status(200).json({
-            message: 'User updated'
+            message: 'User updated' ,
+            data
           })
         })
         .catch(err => {

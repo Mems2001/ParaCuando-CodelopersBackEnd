@@ -15,11 +15,11 @@ module.exports = {
         userId: {
           type: Sequelize.UUID ,
           allowNull: false ,
-          field: 'user_id' ,
           references: {
             key: 'id' ,
             model: 'users'
           } ,
+          field: 'user_id' ,
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE'
         } ,

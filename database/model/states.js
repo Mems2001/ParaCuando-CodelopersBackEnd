@@ -1,4 +1,6 @@
 'use strict'
+const Countries = require('./countries')
+
 const {
   Model
 } = require('sequelize')
@@ -17,11 +19,17 @@ module.exports = (sequelize, DataTypes) => {
   }
   States.init({
     name: DataTypes.STRING,
-    countryId: DataTypes.UUID
+    country_id: DataTypes.UUID
   }, {
     sequelize,
     modelName: 'States',
-    tableName: 'states'
+    tableName: 'states' ,
+    timestamps: false ,
+    defaultScope: {
+      attributes: {
+        exclude: ['country_id']
+      }
+    }
   })
   return States
 }

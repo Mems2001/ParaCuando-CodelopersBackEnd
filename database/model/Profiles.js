@@ -19,22 +19,25 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Profiles.init({
-    userId: DataTypes.UUID ,
-    roleId: DataTypes.UUID ,
+    user_id: DataTypes.UUID ,
+    role_id: DataTypes.UUID ,
     imageUrl: DataTypes.STRING,
     codePhone: DataTypes.INTEGER,
     phone: DataTypes.INTEGER,
-    countryId: DataTypes.UUID
+    country_id: DataTypes.UUID
   }, {
     sequelize,
     modelName: 'Profiles',
     tableName: 'profiles', 
     timestamps: false ,
+    defaultScope: {
+      attributes: {
+        exclude: ['user_id' , 'role_id' , 'country_id']
+      }
+    } ,
     scopes: {
-      public_view: {
-        attributes: {
-          exclude: ['roleId' , 'role_id']
-        }
+      admin: {
+        
       }
     }
   })

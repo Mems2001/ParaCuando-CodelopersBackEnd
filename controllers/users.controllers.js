@@ -91,9 +91,9 @@ class usersControllers {
       
       const newUser = await models.Users.create({
         id: uuid.v4() ,
-        firstName: obj.first_name ,
-        lastName: obj.last_name ,
-        userName: obj.user_name ,
+        firstName: obj.firstName ,
+        lastName: obj.lastName ,
+        userName: obj.userName ,
         email: obj.email ,
         password: hashPassword(obj.password)
       } , {transaction})
@@ -101,14 +101,14 @@ class usersControllers {
       // console.log(newUser)
       // console.log(newUser.dataValues.id)
 
-      const newProfile = await models.Profiles.scope('public_view').create({
+      const newProfile = await models.Profiles.create({
         id: uuid.v4() ,
-        userId: newUser.dataValues.id ,
-        roleId: rolePublic.id ,
+        user_id: newUser.dataValues.id ,
+        role_id: rolePublic.id ,
         imageUrl: obj.imageUrl ,
         codePhone: obj.codePhone ,
         phone: obj.phone ,
-        countryId: obj.countryId
+        country_id: obj.countryId
       } , {transaction} )
   
       await transaction.commit()
@@ -119,18 +119,15 @@ class usersControllers {
     }
   }
 
-  async findOwnProfile (userId) {
-    return await models.Profiles.scope('public_view').findAll({
+  async findOwnProfile (user_id) {
+    return await models.Profiles.findAll({
       where: {
-        userId
+        user_id
       } ,
       include: [
         {
           model: models.Users ,
-          as: 'User' ,
-          attributes: {
-            exclude: ['userName' , 'password']
-          } 
+          as: 'User' 
         } ,
         {
           model: models.Roles ,
@@ -142,10 +139,7 @@ class usersControllers {
           as: 'Country' ,
           attributes: ['name']
         }
-      ] ,
-      attributes: {
-        exclude: ['user_id' ,'userId' ,  'countryId' , 'country_id']
-      }
+      ] 
     })
   }
 
