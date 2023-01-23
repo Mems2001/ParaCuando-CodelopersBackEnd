@@ -13,21 +13,33 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Profiles.belongsTo(models.Users , {as: 'User' , foreignKey: 'user_id'})
       Profiles.belongsTo(models.Roles , {as: 'Role' , foreignKey: 'role_id'})
-     
+      Profiles.hasMany(models.Votes, {as: 'vote', foreignKey: 'profile_id'})
+      Profiles.hasMany(models.Publications, {as: 'profile' , foreignKey: 'profile_id'})
+      Profiles.belongsTo(models.Countries, {as: 'Country' , foreignKey: 'country_id'})
     }
   }
   Profiles.init({
-    userId: DataTypes.UUID ,
-    roleId: DataTypes.UUID ,
+    user_id: DataTypes.UUID ,
+    role_id: DataTypes.UUID ,
     imageUrl: DataTypes.STRING,
     codePhone: DataTypes.INTEGER,
     phone: DataTypes.INTEGER,
-    countryId: DataTypes.UUID
+    country_id: DataTypes.UUID
   }, {
     sequelize,
     modelName: 'Profiles',
     tableName: 'profiles', 
-    timestamps: false 
+    timestamps: false ,
+    defaultScope: {
+      attributes: {
+        exclude: ['user_id' , 'role_id' , 'country_id']
+      }
+    } ,
+    scopes: {
+      admin: {
+        
+      }
+    }
   })
   return Profiles
 }

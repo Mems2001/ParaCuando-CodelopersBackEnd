@@ -19,9 +19,17 @@ class usersControllers {
   }
 
   async findUserByEmail(email) {
-    return await models.Users.findOne({
+    return await models.Users.scope('admin').findOne({
       where: {
         email
+      }
+    })
+  }
+  
+  async findUserById(userId) {
+    return await models.Users.findOne({
+      where: {
+        id: userId
       }
     })
   }
@@ -38,28 +46,54 @@ class usersControllers {
     return data
   }
 
-  async findUserById(userId) {
-    return await models.Users.findOne({
-      where: {
-        id: userId
+  async findUserById2 (userId , altId) {
+    const roleAdmin = await findRoleByName('admin')
+    
+    let isAdmin = false
+    if (altId) {
+      const userProfiles = await models.Profiles.findAll({
+        where: {
+          userId: altId
+        }
+      })
+
+      for (let profile of userProfiles) {
+        if (profile.roleId === roleAdmin.id) {
+          isAdmin = true
+        }
       }
-    })
+    }
+
+    if (isAdmin) {
+      return await models.Users.scope('admin').findOne({
+        where: {
+          id: userId
+        }
+      })
+    } else {
+      return await models.Users.findOne({
+        where: {
+          id: userId
+        }
+      })
+    }
   }
 
   async findAllUsers() {
-    return await models.Users.findAll()
+    return await models.Users.scope('admin').findAll()
   }
   
   async createUser(obj) {
     const transaction = await models.sequelize.transaction()
     const rolePublic = await findRoleByName('public')
+    // console.log(rolePublic)
     try {
       
       const newUser = await models.Users.create({
         id: uuid.v4() ,
-        firstName: obj.first_name ,
-        lastName: obj.last_name ,
-        userName: obj.user_name ,
+        firstName: obj.firstName ,
+        lastName: obj.lastName ,
+        userName: obj.userName ,
         email: obj.email ,
         password: hashPassword(obj.password)
       } , {transaction})
@@ -69,13 +103,13 @@ class usersControllers {
 
       const newProfile = await models.Profiles.create({
         id: uuid.v4() ,
-        userId: newUser.dataValues.id ,
-        roleId: rolePublic.id ,
+        user_id: newUser.dataValues.id ,
+        role_id: rolePublic.id ,
         imageUrl: obj.imageUrl ,
         codePhone: obj.codePhone ,
         phone: obj.phone ,
-        // countryId
-      } , {transaction})
+        country_id: obj.countryId
+      } , {transaction} )
   
       await transaction.commit()
       return {newUser , newProfile}
@@ -85,28 +119,27 @@ class usersControllers {
     }
   }
 
-  async findOwnProfile (userId) {
+  async findOwnProfile (user_id) {
     return await models.Profiles.findAll({
       where: {
-        userId
+        user_id
       } ,
       include: [
         {
           model: models.Users ,
-          as: 'User' ,
-          attributes: {
-            exclude: ['userName' , 'password']
-          } 
+          as: 'User' 
         } ,
         {
           model: models.Roles ,
           as: 'Role' ,
           attributes: ['name']
+        } ,
+        {
+          model: models.Countries ,
+          as: 'Country' ,
+          attributes: ['name']
         }
-      ] ,
-      attributes: {
-        exclude: ['user_id' , 'role_id' ,'userId' , 'roleId']
-      }
+      ] 
     })
   }
 

@@ -2,18 +2,18 @@ const models = require('../database/model')
 const uuid = require('uuid')
 const { findRoleByName } = require('./roles.controllers')
 
-const createProfile = async(obj , userId , roleId , countryId) => {
+const createProfile = async(obj , user_id , role_id , country_id) => {
   const transaction = await models.sequelize.transaction()
 
   try {
     const newProfile = await models.Profiles.create({
       id: uuid.v4() ,
-      userId ,
-      roleId ,
+      user_id ,
+      role_id ,
       imageUrl: obj.imageUrl ,
       codePhone: obj.codePhone ,
       phone: obj.phone ,
-      countryId
+      country_id
     } , {transaction})
 
     await transaction.commit()
@@ -24,18 +24,20 @@ const createProfile = async(obj , userId , roleId , countryId) => {
   }
 }
 
-const verifyAdmin = async(userId) => {
+const verifyAdmin = async(user_id) => {
   try {
-    const user = await models.Profiles.findOne({
+    const profiles = await models.Profiles.scope('admin').findAll({
       where: {
-        userId
+        user_id
       }
     })
-  
+    
     const admin = await findRoleByName('admin')
-  
-    if (admin.id === user.roleId) {
-      return true
+    
+    for (let profile of profiles) {
+      if (admin.id === profile.role_id) {
+        return true
+      }
     }
   
     return false
@@ -45,9 +47,21 @@ const verifyAdmin = async(userId) => {
     return false
   }
 
-} 
+}
+
+const findProfileByUserId = async(user_id) => {
+  const publicRole = await findRoleByName('public')
+  
+  return await models.Profiles.findOne({
+    where: {
+      user_id ,
+      role_id: publicRole.id
+    }
+  })
+}
 
 module.exports = {
   createProfile ,
-  verifyAdmin
+  verifyAdmin ,
+  findProfileByUserId
 }
