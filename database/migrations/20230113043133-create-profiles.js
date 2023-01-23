@@ -15,11 +15,11 @@ module.exports = {
         userId: {
           type: Sequelize.UUID ,
           allowNull: false ,
-          field: 'user_id' ,
           references: {
             key: 'id' ,
             model: 'users'
           } ,
+          field: 'user_id' ,
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE'
         } ,
@@ -51,12 +51,17 @@ module.exports = {
           type: Sequelize.INTEGER,
           allowNull: false
         } ,
-        countryId: { // Waiting for Josué
+        countryId: { 
           type: Sequelize.UUID,
-          // allowNull: false,
-          field: 'country_id'
-          // Foreign key references pending
-        } ,
+          allowNull: false,
+          field: 'country_id',
+          references: {
+            key: 'id',
+            model: 'countries'
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE'
+        },
         createdAt: {
           allowNull: false,
           type: Sequelize.DATE ,

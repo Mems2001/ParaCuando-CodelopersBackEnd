@@ -16,8 +16,8 @@ const getUserByUserName = (req, res) => {
 }
 
 const postNewUser = (req , res) => {
-  const {first_name , last_name , user_name , email , password , phone} = req.body
-  usersController.createUser({first_name , last_name , user_name , email , password , phone})
+  const {firstName , lastName , userName , email , password , phone , countryId} = req.body
+  usersController.createUser({firstName , lastName , userName , email , password , phone , countryId})
     .then(data => {
       return res.status(201).json({
         User: data.newUser ,
@@ -28,12 +28,13 @@ const postNewUser = (req , res) => {
       res.status(400).json({
         message: err.message ,
         fields: {
-          first_name: 'string' ,
-          last_name: 'string' ,
-          user_name: 'string' ,
+          firstName: 'string' ,
+          lastName: 'string' ,
+          userName: 'string' ,
           email: 'string@email.com' ,
           password: 'string' ,
-          phone: 9999999999
+          phone: 999999999 ,
+          countryId: 'uuid'
         }
       })
     })
@@ -42,7 +43,10 @@ const postNewUser = (req , res) => {
 
 const getUserById = (req , res) => {
   const userId = req.params.user_id
-  usersController.findUserById(userId)
+  // const altId = req.user.id
+  const altId = false
+
+  usersController.findUserById2(userId , altId)
     .then(data => {
       if (data) {
         res.status(200).json(data)
@@ -57,6 +61,7 @@ const getUserById = (req , res) => {
         message: err.message
       })
     })
+  
 }
 
 const getAllUsers = (req , res) => {
@@ -72,8 +77,8 @@ const getAllUsers = (req , res) => {
 } 
 
 const getOwnProfile = (req , res) => {
-  // const userId = req.user.id
-  const {userId} = req.body
+  const userId = req.user.id
+  // const {userId} = req.body
 
   usersController.findOwnProfile(userId)
     .then(data => {
@@ -87,32 +92,40 @@ const getOwnProfile = (req , res) => {
 }
 
 const putUser = (req, res) => {
-  // const userId = req.user.id
-  const {userId} = req.body
+  const userId = req.user.id
+  const altId = req.params.user_id
+  // const {userId} = req.body
   const {firstName , lastName , userName} = req.body
 
-  if (firstName && lastName && userName) {
-    usersController.updateUser(userId , {
-      firstName , lastName , userName
-    })
-      .then(data => {
-        res.status(200).json({
-          message: 'User updated'
-        })
+  if (userId === altId) {
+    if (firstName && lastName && userName) {
+      usersController.updateUser(userId , {
+        firstName , lastName , userName
       })
-      .catch(err => {
-        res.status(400).json({
-          message: err.message
+        .then(data => {
+          res.status(200).json({
+            message: 'User updated' ,
+            data
+          })
         })
+        .catch(err => {
+          res.status(400).json({
+            message: err.message
+          })
+        })
+    } else {
+      res.status(400).json({
+        message: 'All fields are required' ,
+        fields: {
+          firstName: 'string' ,
+          lastName: 'string' ,
+          userName: 'string'
+        }
       })
+    }
   } else {
-    res.status(400).json({
-      message: 'All fields are required' ,
-      fields: {
-        firstName: 'string' ,
-        lastName: 'string' ,
-        userName: 'string'
-      }
+    res.status(401).json({
+      message: 'You can only update your own profile'
     })
   }
 }
