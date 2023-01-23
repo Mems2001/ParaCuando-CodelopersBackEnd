@@ -1,5 +1,5 @@
 'use strict'
-// const uuid = require('uuid')
+const uuid = require('uuid')
 const {Op} = require('sequelize')
 
 /** @type {import('sequelize-cli').Migration} */
@@ -8,27 +8,27 @@ module.exports = {
     const transaction = await queryInterface.sequelize.transaction()
 
     try {
-      await queryInterface.bulkInsert('publication_types' , [
+      await queryInterface.bulkInsert('publications_types' , [
         {
-          id: 1 ,
+          id: uuid.v4() ,
           name: 'event' ,
           description: '' ,
-          createdAt: new Date() ,
-          updatedAt: new Date()
+          created_at: new Date() ,
+          updated_at: new Date()
         } ,
         {
-          id: 2 ,
+          id: uuid.v4() ,
           name: 'concert' ,
           description: '' ,
-          createdAt: new Date() ,
-          updatedAt: new Date()
+          created_at: new Date() ,
+          updated_at: new Date()
         } ,
         {
-          id: 3 ,
+          id: uuid.v4() ,
           name: 'tournament' ,
           description: '' ,
-          createdAt: new Date() ,
-          updatedAt: new Date()
+          created_at: new Date() ,
+          updated_at: new Date()
         } ,
       ] , {transaction})
 
@@ -43,7 +43,7 @@ module.exports = {
     const transaction = await queryInterface.sequelize.transaction()
 
     try {
-      await queryInterface.bulkDelete('publication_types' , {
+      await queryInterface.bulkDelete('publications_types' , {
         name: {
           [Op.or] : ['event' , 'concert' , 'tournament']
         }

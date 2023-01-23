@@ -1,5 +1,5 @@
 'use strict'
-// const uuid = require('uuid')
+const uuid = require('uuid')
 const {Op} = require('sequelize')
 
 /** @type {import('sequelize-cli').Migration} */
@@ -10,10 +10,10 @@ module.exports = {
     try {
       await queryInterface.bulkInsert('countries' , [
         {
-          id: 1  ,
+          id: uuid.v4()  ,
           name: 'Ecuador' , // Waiting for decision
-          createdAt: new Date() ,
-          updatedAt: new Date() 
+          created_at: new Date() ,
+          updated_at: new Date() 
         } 
       ] , {transaction})
 

@@ -1,5 +1,7 @@
 'use strict'
+const uuid = require('uuid')
 const {Op} = require('sequelize')
+const { findCountryByName } = require('../../controllers/countries.controllers')
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -7,27 +9,28 @@ module.exports = {
     const transaction = await queryInterface.sequelize.transaction()
 
     try {
+      const country = await findCountryByName('Ecuador')
       await queryInterface.bulkInsert('states' , [
         {
-          id: 1 ,
-          country_id: 1 ,
+          id: uuid.v4() ,
+          country_id: country.id ,
           name: 'Pichincha' ,
-          createdAt: new Date() ,
-          updatedAt: new Date()
+          created_at: new Date() ,
+          updated_at: new Date()
         } ,
         {
-          id: 2 ,
-          country_id: 1 ,
+          id: uuid.v4() ,
+          country_id: country.id ,
           name: 'Azuay' ,
-          createdAt: new Date() ,
-          updatedAt: new Date()
+          created_at: new Date() ,
+          updated_at: new Date()
         } ,
         {
-          id: 3 ,
-          country_id: 1 ,
+          id: uuid.v4() ,
+          country_id: country.id ,
           name: 'Guayas' ,
-          createdAt: new Date() ,
-          updatedAt: new Date()
+          created_at: new Date() ,
+          updated_at: new Date()
         }
       ] , {transaction})
 

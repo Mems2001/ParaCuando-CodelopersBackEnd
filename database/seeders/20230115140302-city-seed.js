@@ -1,6 +1,7 @@
 'use strict'
-// const uuid = require('uuid')
+const uuid = require('uuid')
 const {Op} = require('sequelize')
+const { findStateByName } = require('../../controllers/states.controllers')
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -8,27 +9,31 @@ module.exports = {
     const transaction = await queryInterface.sequelize.transaction()
 
     try {
+      const pichincha = await findStateByName('Pichincha')
+      const azuay = await findStateByName('Azuay')
+      const guayas = await findStateByName('Guayas')
+
       await queryInterface.bulkInsert('cities' , [
         {
-          id: 1 ,
-          state_id: 1,  // Waiting for Josué
+          id: uuid.v4() ,
+          state_id: pichincha.id,  // Waiting for Josué
           name: 'Quito',
-          createdAt: new Date() ,
-          updatedAt: new Date()
+          created_at: new Date() ,
+          updated_at: new Date()
         } ,
         {
-          id: 2 ,
-          state_id: 2 ,
+          id: uuid.v4() ,
+          state_id: azuay.id ,
           name: 'Cuenca',
-          createdAt: new Date() ,
-          updatedAt: new Date()
+          created_at: new Date() ,
+          updated_at: new Date()
         } ,
         {
-          id: 3 ,
-          state_id: 3 ,
+          id: uuid.v4() ,
+          state_id: guayas.id ,
           name: 'Guayaquil',
-          createdAt: new Date() ,
-          updatedAt: new Date()
+          created_at: new Date() ,
+          updated_at: new Date()
         }
       ] , {transaction})
 
