@@ -10,8 +10,6 @@ module.exports = {
       await queryInterface.createTable('votes', {
         id: {
           allowNull: false,
-          //autoIncrement: true,
-          defaultValue: Sequelize.UUID,
           primaryKey: true,
           type: Sequelize.UUID
         },

@@ -48,17 +48,19 @@ class usersControllers {
 
   async findUserById2 (userId , altId) {
     const roleAdmin = await findRoleByName('admin')
-    const userProfiles = await models.Profiles.findAll({
-      where: {
-        userId: altId
-      }
-    })
-
+    
     let isAdmin = false
+    if (altId) {
+      const userProfiles = await models.Profiles.findAll({
+        where: {
+          userId: altId
+        }
+      })
 
-    for (let profile of userProfiles) {
-      if (profile.roleId === roleAdmin.id) {
-        isAdmin = true
+      for (let profile of userProfiles) {
+        if (profile.roleId === roleAdmin.id) {
+          isAdmin = true
+        }
       }
     }
 

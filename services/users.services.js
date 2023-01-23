@@ -43,7 +43,9 @@ const postNewUser = (req , res) => {
 
 const getUserById = (req , res) => {
   const userId = req.params.user_id
-  const altId = req.user.id
+  // const altId = req.user.id
+  const altId = false
+
   usersController.findUserById2(userId , altId)
     .then(data => {
       if (data) {
@@ -59,6 +61,7 @@ const getUserById = (req , res) => {
         message: err.message
       })
     })
+  
 }
 
 const getAllUsers = (req , res) => {

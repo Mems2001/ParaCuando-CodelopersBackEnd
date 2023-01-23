@@ -45,9 +45,21 @@ const verifyAdmin = async(userId) => {
     return false
   }
 
-} 
+}
+
+const findProfileByUserId = async(userId) => {
+  const publicRole = await findRoleByName('public')
+  
+  return await models.Profiles.findOne({
+    where: {
+      userId ,
+      roleId: publicRole.id
+    }
+  })
+}
 
 module.exports = {
   createProfile ,
-  verifyAdmin
+  verifyAdmin ,
+  findProfileByUserId
 }

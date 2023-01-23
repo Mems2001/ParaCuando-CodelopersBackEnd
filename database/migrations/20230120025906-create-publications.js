@@ -7,8 +7,6 @@ module.exports = {
       await queryInterface.createTable('publications', {
         id: {
           allowNull: false,
-          // autoIncrement: true,
-          defaultValue: Sequelize.UUIDV4,
           primaryKey: true,
           type: Sequelize.UUID
         },
