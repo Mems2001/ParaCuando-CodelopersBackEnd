@@ -2,12 +2,12 @@
 
 ## Branches organization:
 
-we will work as a three membres team, so the repository will consists of the following branches: 
+We will work as a three membres team, so the repository will consists of the following branches: 
 
 - `main`: Here we will merge only the code that was already proven to work correctly, and as a groupal commit from the next branch:
-- `pre-merge`: This branch will merge commits from each team member individual branch, and will be used as a branch for code testing. Here we will certify that the code actually works before merging it to `main`.
-- `Models-2`: This branch correspond to the team member in charge of the second part of the models as described in [asana](), it will only receive pull requests from that member. 
-- `auth`: This branch belongs to the member in charge of the authorization routes as described in [asana](), it will only receive pull requests from that member.
+- `pre-merge`: This branch will merge commits from each team member individual branch, and will be used as a branch for groupal code testing (asumming of course, that each member has tested his own code in his local proyect before). Here we will certify that the merged code actually works before merging it into `main`.
+- `Models-2`: This branch correspond to the team member in charge of the second part of the models as described in [asana](https://app.asana.com/0/1203704897833700/list), it will only receive pull requests from that member. 
+- `auth`: This branch belongs to the member in charge of the authorization routes as described in [asana](https://app.asana.com/0/1203704897833700/list), it will only receive pull requests from that member.
 
 The remaining member will push his part directly to `pre-merge` to reduce the amount of merges.
 
