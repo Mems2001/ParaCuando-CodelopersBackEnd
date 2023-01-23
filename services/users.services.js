@@ -89,32 +89,39 @@ const getOwnProfile = (req , res) => {
 }
 
 const putUser = (req, res) => {
-  // const userId = req.user.id
-  const {userId} = req.body
+  const userId = req.user.id
+  const altId = req.params.user_id
+  // const {userId} = req.body
   const {firstName , lastName , userName} = req.body
 
-  if (firstName && lastName && userName) {
-    usersController.updateUser(userId , {
-      firstName , lastName , userName
-    })
-      .then(data => {
-        res.status(200).json({
-          message: 'User updated'
-        })
+  if (userId === altId) {
+    if (firstName && lastName && userName) {
+      usersController.updateUser(userId , {
+        firstName , lastName , userName
       })
-      .catch(err => {
-        res.status(400).json({
-          message: err.message
+        .then(data => {
+          res.status(200).json({
+            message: 'User updated'
+          })
         })
+        .catch(err => {
+          res.status(400).json({
+            message: err.message
+          })
+        })
+    } else {
+      res.status(400).json({
+        message: 'All fields are required' ,
+        fields: {
+          firstName: 'string' ,
+          lastName: 'string' ,
+          userName: 'string'
+        }
       })
+    }
   } else {
-    res.status(400).json({
-      message: 'All fields are required' ,
-      fields: {
-        firstName: 'string' ,
-        lastName: 'string' ,
-        userName: 'string'
-      }
+    res.status(401).json({
+      message: 'You can only update your own profile'
     })
   }
 }
