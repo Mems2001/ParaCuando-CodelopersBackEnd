@@ -1,4 +1,17 @@
 # !Basic Information for team work
+
+## Branches organization:
+
+we will work as a three membres team, so the repository will consists of the following branches: 
+
+- `main`: Here we will merge only the code that was already proven to work correctly, and as a groupal commit from the next branch:
+- `pre-merge`: This branch will merge commits from each team member individual branch, and will be used as a branch for code testing. Here we will certify that the code actually works before merging it to `main`.
+- `Models-2`: This branch correspond to the team member in charge of the second part of the models as described in [asana](), it will only receive pull requests from that member. 
+- `auth`: This branch belongs to the member in charge of the authorization routes as described in [asana](), it will only receive pull requests from that member.
+
+The remaining member will push his part directly to `pre-merge` to reduce the amount of merges.
+
+Make sure you have your local proyect updated at least in relation to branch `main`, but preferably to `pre-merge`.
    
 ## About [npm](https://www.npmjs.com/) & [node](https://nodejs.org/en/) versions:
 
