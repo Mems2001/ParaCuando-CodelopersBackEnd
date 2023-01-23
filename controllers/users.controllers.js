@@ -19,9 +19,17 @@ class usersControllers {
   }
 
   async findUserByEmail(email) {
-    return await models.Users.findOne({
+    return await models.Users.scope('admin').findOne({
       where: {
         email
+      }
+    })
+  }
+  
+  async findUserById(userId) {
+    return await models.Users.findOne({
+      where: {
+        id: userId
       }
     })
   }
@@ -38,21 +46,45 @@ class usersControllers {
     return data
   }
 
-  async findUserById(userId) {
-    return await models.Users.findOne({
+  async findUserById2 (userId , altId) {
+    const roleAdmin = await findRoleByName('admin')
+    const userProfiles = await models.Profiles.findAll({
       where: {
-        id: userId
+        userId: altId
       }
     })
+
+    let isAdmin = false
+
+    for (let profile of userProfiles) {
+      if (profile.roleId === roleAdmin.id) {
+        isAdmin = true
+      }
+    }
+
+    if (isAdmin) {
+      return await models.Users.scope('admin').findOne({
+        where: {
+          id: userId
+        }
+      })
+    } else {
+      return await models.Users.findOne({
+        where: {
+          id: userId
+        }
+      })
+    }
   }
 
   async findAllUsers() {
-    return await models.Users.findAll()
+    return await models.Users.scope('admin').findAll()
   }
   
   async createUser(obj) {
     const transaction = await models.sequelize.transaction()
     const rolePublic = await findRoleByName('public')
+    // console.log(rolePublic)
     try {
       
       const newUser = await models.Users.create({
@@ -67,15 +99,15 @@ class usersControllers {
       // console.log(newUser)
       // console.log(newUser.dataValues.id)
 
-      const newProfile = await models.Profiles.create({
+      const newProfile = await models.Profiles.scope('public_view').create({
         id: uuid.v4() ,
         userId: newUser.dataValues.id ,
         roleId: rolePublic.id ,
         imageUrl: obj.imageUrl ,
         codePhone: obj.codePhone ,
         phone: obj.phone ,
-        // countryId
-      } , {transaction})
+        countryId: obj.countryId
+      } , {transaction} )
   
       await transaction.commit()
       return {newUser , newProfile}
@@ -86,7 +118,7 @@ class usersControllers {
   }
 
   async findOwnProfile (userId) {
-    return await models.Profiles.findAll({
+    return await models.Profiles.scope('public_view').findAll({
       where: {
         userId
       } ,
@@ -102,10 +134,15 @@ class usersControllers {
           model: models.Roles ,
           as: 'Role' ,
           attributes: ['name']
+        } ,
+        {
+          model: models.Countries ,
+          as: 'Country' ,
+          attributes: ['name']
         }
       ] ,
       attributes: {
-        exclude: ['user_id' , 'role_id' ,'userId' , 'roleId']
+        exclude: ['user_id' ,'userId' ,  'countryId' , 'country_id']
       }
     })
   }

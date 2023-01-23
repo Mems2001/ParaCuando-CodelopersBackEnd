@@ -16,8 +16,8 @@ const getUserByUserName = (req, res) => {
 }
 
 const postNewUser = (req , res) => {
-  const {first_name , last_name , user_name , email , password , phone} = req.body
-  usersController.createUser({first_name , last_name , user_name , email , password , phone})
+  const {first_name , last_name , user_name , email , password , phone , countryId} = req.body
+  usersController.createUser({first_name , last_name , user_name , email , password , phone , countryId})
     .then(data => {
       return res.status(201).json({
         User: data.newUser ,
@@ -33,7 +33,8 @@ const postNewUser = (req , res) => {
           user_name: 'string' ,
           email: 'string@email.com' ,
           password: 'string' ,
-          phone: 9999999999
+          phone: 999999999 ,
+          countryId: 'uuid'
         }
       })
     })
@@ -42,7 +43,8 @@ const postNewUser = (req , res) => {
 
 const getUserById = (req , res) => {
   const userId = req.params.user_id
-  usersController.findUserById(userId)
+  const altId = req.user.id
+  usersController.findUserById2(userId , altId)
     .then(data => {
       if (data) {
         res.status(200).json(data)
@@ -72,8 +74,8 @@ const getAllUsers = (req , res) => {
 } 
 
 const getOwnProfile = (req , res) => {
-  // const userId = req.user.id
-  const {userId} = req.body
+  const userId = req.user.id
+  // const {userId} = req.body
 
   usersController.findOwnProfile(userId)
     .then(data => {

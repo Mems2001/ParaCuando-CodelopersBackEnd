@@ -6,13 +6,13 @@ const usersServices = require('../services/users.services')
 
 router.route('/')
   .post(usersServices.postNewUser)
-  .get(passportJWT.authenticate('jwt' , {session:false}),roleMiddleware, usersServices.getAllUsers)
+  .get(passportJWT.authenticate('jwt' , {session:false}), roleMiddleware, usersServices.getAllUsers)
 
-router.get('/user-info' , usersServices.getOwnProfile) // Middleware pending
+router.get('/user-info' , passportJWT.authenticate('jwt' , {session:false}) , usersServices.getOwnProfile) // Middleware pending
 
 router.route('/:user_id')
-  .get(usersServices.getUserById)
-  .put(usersServices.putUser) // Middleware pending
+  .get( passportJWT.authenticate('jwt' , {session:false}) , usersServices.getUserById)
+  .put( passportJWT.authenticate('jwt' , {session:false}) , usersServices.putUser) // Middleware pending
 // router.get('/:user_name' , usersServices.getUserByUserName)
 
 router.get('/:user_id/votes') // Waiting for Josue

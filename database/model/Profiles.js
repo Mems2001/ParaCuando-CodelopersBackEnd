@@ -29,7 +29,14 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Profiles',
     tableName: 'profiles', 
-    timestamps: false 
+    timestamps: false ,
+    scopes: {
+      public_view: {
+        attributes: {
+          exclude: ['roleId' , 'role_id']
+        }
+      }
+    }
   })
   return Profiles
 }
