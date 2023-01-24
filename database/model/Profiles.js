@@ -29,10 +29,10 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Profiles',
     tableName: 'profiles', 
-    timestamps: false ,
+    timestamps: true ,
     defaultScope: {
       attributes: {
-        exclude: ['user_id' , 'role_id' , 'country_id']
+        exclude: ['user_id' , 'role_id' , 'country_id' , 'created_at' , 'updated_at']
       }
     } ,
     scopes: {
