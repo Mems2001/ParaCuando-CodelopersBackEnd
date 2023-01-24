@@ -21,17 +21,15 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     emailVerified: DataTypes.DATE,
-    token: DataTypes.STRING,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE
+    token: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Users',
     tableName: 'users' ,
-    timestamps: false ,
+    timestamps: true ,
     defaultScope: {
       attributes: {
-        exclude: ['password' , 'emailVerified' , 'token' , 'createdAt' , 'updatedAt']
+        exclude: ['password' , 'emailVerified' , 'token' , 'created_at' , 'updated_at']
       }
     } ,
     scopes: {
